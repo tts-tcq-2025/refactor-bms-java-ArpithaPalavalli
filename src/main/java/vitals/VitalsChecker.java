@@ -8,30 +8,25 @@ public abstract class VitalsChecker {
     static final float MIN_SPO2 = 90;
 
     static boolean vitalsOk(float temperature, float pulseRate, float spo2) throws InterruptedException {
-        String errorMessage = null;
         boolean isOk = true;
 
-        if (!checkValue(temperature, MIN_TEMPERATURE, MAX_TEMPERATURE, "Temperature is critical!")) {
-            errorMessage = "Temperature is critical!";
+        if (!checkValue(temperature, MIN_TEMPERATURE, MAX_TEMPERATURE)) {
+            displayCriticalMessage("Temperature is critical!");
             isOk = false;
         }
-        if (!checkValue(pulseRate, MIN_PULSE_RATE, MAX_PULSE_RATE, "Pulse Rate is out of range!")) {
-            errorMessage = "Pulse Rate is out of range!";
+        if (!checkValue(pulseRate, MIN_PULSE_RATE, MAX_PULSE_RATE)) {
+            displayCriticalMessage("Pulse Rate is out of range!");
             isOk = false;
         }
-        if (!checkValue(spo2, MIN_SPO2, Float.MAX_VALUE, "Oxygen Saturation out of range!")) {
-            errorMessage = "Oxygen Saturation out of range!";
+        if (!checkValue(spo2, MIN_SPO2, Float.MAX_VALUE)) {
+            displayCriticalMessage("Oxygen Saturation out of range!");
             isOk = false;
-        }
-
-        if (!isOk && errorMessage != null) {
-            displayCriticalMessage(errorMessage);
         }
 
         return isOk;
     }
 
-    private static boolean checkValue(float value, float min, float max, String errorMessage) {
+    private static boolean checkValue(float value, float min, float max) {
         return value >= min && value <= max;
     }
 
@@ -49,6 +44,61 @@ public abstract class VitalsChecker {
         }
     }
 }
+
+
+
+
+// package vitals;
+
+// public abstract class VitalsChecker {
+//     static final float MAX_TEMPERATURE = 102;
+//     static final float MIN_TEMPERATURE = 95;
+//     static final float MAX_PULSE_RATE = 100;
+//     static final float MIN_PULSE_RATE = 60;
+//     static final float MIN_SPO2 = 90;
+
+//     static boolean vitalsOk(float temperature, float pulseRate, float spo2) throws InterruptedException {
+//         String errorMessage = null;
+//         boolean isOk = true;
+
+//         if (!checkValue(temperature, MIN_TEMPERATURE, MAX_TEMPERATURE, "Temperature is critical!")) {
+//             errorMessage = "Temperature is critical!";
+//             isOk = false;
+//         }
+//         if (!checkValue(pulseRate, MIN_PULSE_RATE, MAX_PULSE_RATE, "Pulse Rate is out of range!")) {
+//             errorMessage = "Pulse Rate is out of range!";
+//             isOk = false;
+//         }
+//         if (!checkValue(spo2, MIN_SPO2, Float.MAX_VALUE, "Oxygen Saturation out of range!")) {
+//             errorMessage = "Oxygen Saturation out of range!";
+//             isOk = false;
+//         }
+
+//         if (!isOk && errorMessage != null) {
+//             displayCriticalMessage(errorMessage);
+//         }
+
+//         return isOk;
+//     }
+
+//     private static boolean checkValue(float value, float min, float max, String errorMessage) {
+//         return value >= min && value <= max;
+//     }
+
+//     private static void displayCriticalMessage(String message) throws InterruptedException {
+//         System.out.println(message);
+//         animateWarning();
+//     }
+
+//     private static void animateWarning() throws InterruptedException {
+//         for (int i = 0; i < 6; i++) {
+//             System.out.print("\r* ");
+//             Thread.sleep(1000);
+//             System.out.print("\r *");
+//             Thread.sleep(1000);
+//         }
+//     }
+// }
 
 
 
