@@ -1,3 +1,4 @@
+package vitals;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -81,6 +82,7 @@ class VitalsTest {
 //     // assertFalse(VitalsChecker.vitalsOk(102f, 100, 90)); // Temperature and Pulse rate at maximum limits
 //    }
 // }
+
 
 
 
