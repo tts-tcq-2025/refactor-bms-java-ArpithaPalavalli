@@ -10,4 +10,12 @@ public class PulseRateVital extends RangeVital {
     public boolean isNormal(VitalReading reading) {
         return inRange(reading.pulseRate);
     }
+    @Override
+    public String getWarningMessage(VitalReading reading) {
+        return checkWarningRange(
+            reading.pulseRate,
+            "Warning: Approaching bradycardia",
+            "Warning: Approaching tachycardia"
+        );
+    }
 }
