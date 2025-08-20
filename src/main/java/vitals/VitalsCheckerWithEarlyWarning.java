@@ -24,42 +24,12 @@ public class VitalsCheckerWithEarlyWarning {
                 messageHandler.handle(vital.getCriticalMessage());
                 allOk = false;
             } else {
-                checkWarning(vital, reading);
+                String warning = vital.getWarningMessage(reading);
+                if (warning != null) {
+                    messageHandler.handle(warning);
+                }
             }
         }
         return allOk;
-    }
-
-    private void checkWarning(Vital vital, VitalReading reading) {
-        if (vital instanceof TemperatureVital) {
-            float min = 95f;
-            float max = 102f;
-            float tolerance = max * 0.015f;
-
-            if (reading.temperature <= min + tolerance) {
-                messageHandler.handle("Warning: Approaching hypothermia");
-            } else if (reading.temperature >= max - tolerance) {
-                messageHandler.handle("Warning: Approaching hyperthermia");
-            }
-
-        } else if (vital instanceof PulseRateVital) {
-            float min = 60f;
-            float max = 100f;
-            float tolerance = max * 0.015f;
-
-            if (reading.pulseRate <= min + tolerance) {
-                messageHandler.handle("Warning: Approaching bradycardia");
-            } else if (reading.pulseRate >= max - tolerance) {
-                messageHandler.handle("Warning: Approaching tachycardia");
-            }
-
-        } else if (vital instanceof SpO2Vital) {
-            float min = 90f;
-            float tolerance = min * 0.015f;
-
-            if (reading.spo2 <= min + tolerance && reading.spo2 >= min) {
-                messageHandler.handle("Warning: Approaching hypoxemia");
-            }
-        }
     }
 }
