@@ -21,10 +21,7 @@ public class SpO2Vital implements Vital {
     }
     @Override
     public String getWarningMessage(VitalReading reading) {
-        float tolerance = min * 0.015f; // 1.5% of lower limit
-        if (reading.spo2 <= min + tolerance && reading.spo2 >= min) {
-            return "Warning: Approaching hypoxemia";
-        }
-        return null;
+        float tol = tolerance(min);
+        return (reading.spo2 <= min + tol && reading.spo2 >= min) ? warningMsg : null;
     }
 }
