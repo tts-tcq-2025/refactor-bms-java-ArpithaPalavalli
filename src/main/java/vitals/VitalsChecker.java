@@ -23,6 +23,11 @@ public class VitalsChecker {
             if (!vital.isNormal(reading)) {
                 messageHandler.handle(vital.getCriticalMessage());
                 allOk = false;
+            } else {
+                String warning = vital.getWarningMessage(reading);
+                if (warning != null) {
+                    messageHandler.handle(warning);
+                }
             }
         }
         return allOk;
