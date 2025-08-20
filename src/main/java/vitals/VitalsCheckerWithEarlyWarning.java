@@ -17,10 +17,9 @@ public class VitalsCheckerWithEarlyWarning {
     }
 
     public boolean vitalsOk(float temperature, float pulseRate, float spo2) {
-        VitalReading reading = new VitalReading(temperature, pulseRate, spo2);
-
-        return vitals.stream().map(v -> checkVital(v, reading)).reduce(true, (a, b) -> a && b);
-    }
+    VitalReading reading = new VitalReading(temperature, pulseRate, spo2);
+    return vitals.stream().allMatch(v -> checkVital(v, reading));
+}
 
     private boolean checkVital(Vital vital, VitalReading reading) {
         if (!vital.isNormal(reading)) {
@@ -28,7 +27,9 @@ public class VitalsCheckerWithEarlyWarning {
             return false;
         }
         String warning = vital.getWarningMessage(reading);
-        if (warning != null) messageHandler.handle(warning);
+         if (warning != null) {
+        messageHandler.handle(warning);
+    }
         return true;
     }
 }
