@@ -29,8 +29,13 @@ public abstract class RangeVital implements Vital {
         float value = extractValue(reading);
         float tol = tolerance(max);
 
-        return (value <= min + tol) ? lowMsg :
-               (value >= max - tol) ? highMsg : null;
+        if (value <= min + tol) {
+            return lowMsg;
+        }
+        if (value >= max - tol) {
+            return highMsg;
+        }
+        return null;
     }
 
     // Each subclass tells which value to check
