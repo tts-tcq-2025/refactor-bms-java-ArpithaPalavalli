@@ -1,35 +1,34 @@
 package vitals;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Arrays;
 
 public class VitalsCheckerWithEarlyWarning {
-
-    private final List<Vital> vitals = new ArrayList<>();
+    private final List<Vital> vitals;
     private final CriticalMessageHandler messageHandler;
 
     public VitalsCheckerWithEarlyWarning(CriticalMessageHandler messageHandler) {
         this.messageHandler = messageHandler;
-        vitals.add(new TemperatureVital(95, 102));
-        vitals.add(new PulseRateVital(60, 100));
-        vitals.add(new SpO2Vital(90));
+        this.vitals = Arrays.asList(
+            new TemperatureVital(95, 102),
+            new PulseRateVital(60, 100),
+            new SpO2Vital(90)
+        );
     }
 
     public boolean vitalsOk(float temperature, float pulseRate, float spo2) {
         VitalReading reading = new VitalReading(temperature, pulseRate, spo2);
-        boolean allOk = true;
 
-        for (Vital vital : vitals) {
-            if (!vital.isNormal(reading)) {
-                messageHandler.handle(vital.getCriticalMessage());
-                allOk = false;
-            } else {
-                String warning = vital.getWarningMessage(reading);
-                if (warning != null) {
-                    messageHandler.handle(warning);
-                }
-            }
+        return vitals.stream().map(v -> checkVital(v, reading)).reduce(true, (a, b) -> a && b);
+    }
+
+    private boolean checkVital(Vital vital, VitalReading reading) {
+        if (!vital.isNormal(reading)) {
+            messageHandler.handle(vital.getCriticalMessage());
+            return false;
         }
-        return allOk;
+        String warning = vital.getWarningMessage(reading);
+        if (warning != null) messageHandler.handle(warning);
+        return true;
     }
 }
