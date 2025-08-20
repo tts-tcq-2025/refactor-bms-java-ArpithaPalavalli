@@ -3,7 +3,10 @@ package vitals;
 public class PulseRateVital extends RangeVital {
 
     public PulseRateVital(float min, float max) {
-        super(min, max, "Pulse Rate is out of range!");
+        super(min, max,
+              "Pulse Rate is out of range!",
+              "Warning: Approaching bradycardia",
+              "Warning: Approaching tachycardia");
     }
 
     @Override
