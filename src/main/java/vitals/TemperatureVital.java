@@ -3,7 +3,10 @@ package vitals;
 public class TemperatureVital extends RangeVital {
 
     public TemperatureVital(float min, float max) {
-        super(min, max, "Temperature is critical!");
+       super(min, max,
+              "Temperature is critical!",
+              "Warning: Approaching hypothermia",
+              "Warning: Approaching hyperthermia");
     }
 
     @Override
