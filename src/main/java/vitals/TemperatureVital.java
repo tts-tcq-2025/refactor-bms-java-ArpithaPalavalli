@@ -10,4 +10,12 @@ public class TemperatureVital extends RangeVital {
     public boolean isNormal(VitalReading reading) {
         return inRange(reading.temperature);
     }
+    @Override
+    public String getWarningMessage(VitalReading reading) {
+        return checkWarningRange(
+            reading.temperature,
+            "Warning: Approaching hypothermia",
+            "Warning: Approaching hyperthermia"
+        );
+    }
 }
