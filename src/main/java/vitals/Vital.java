@@ -3,7 +3,10 @@ package vitals;
 public interface Vital {
     boolean isNormal(VitalReading reading);
     String getCriticalMessage();
-}
-default String getWarningMessage(VitalReading reading) {
-        return null;
+    String getWarningMessage(VitalReading reading);
+
+    // Helper: calculate tolerance
+    default float tolerance(float base) {
+        return base * 0.015f;
     }
+}
