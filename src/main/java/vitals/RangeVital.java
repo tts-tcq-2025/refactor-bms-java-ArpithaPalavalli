@@ -4,11 +4,15 @@ public abstract class RangeVital implements Vital {
     protected final float min;
     protected final float max;
     protected final String message;
+    private final String lowMsg;
+    private final String highMsg;
 
-    protected RangeVital(float min, float max, String message) {
+    protected RangeVital(float min, float max, String message, String lowMsg, String highMsg) {
         this.min = min;
         this.max = max;
         this.message = message;
+        this.lowMsg = lowMsg;
+        this.highMsg = highMsg;
     }
 
     protected boolean inRange(float value) {
@@ -19,13 +23,16 @@ public abstract class RangeVital implements Vital {
     public String getCriticalMessage() {
         return message;
     }
-    protected String checkWarningRange(float value, String lowMsg, String highMsg) {
-        float tolerance = max * 0.015f; // 1.5% of upper limit
-        if (value <= min + tolerance) {
-            return lowMsg;
-        } else if (value >= max - tolerance) {
-            return highMsg;
-        }
-        return null;
+
+    @Override
+    public String getWarningMessage(VitalReading reading) {
+        float value = extractValue(reading);
+        float tol = tolerance(max);
+
+        return (value <= min + tol) ? lowMsg :
+               (value >= max - tol) ? highMsg : null;
     }
+
+    // Each subclass tells which value to check
+    protected abstract float extractValue(VitalReading reading);
 }
