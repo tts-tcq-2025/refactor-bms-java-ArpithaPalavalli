@@ -19,4 +19,13 @@ public abstract class RangeVital implements Vital {
     public String getCriticalMessage() {
         return message;
     }
+    protected String checkWarningRange(float value, String lowMsg, String highMsg) {
+        float tolerance = max * 0.015f; // 1.5% of upper limit
+        if (value <= min + tolerance) {
+            return lowMsg;
+        } else if (value >= max - tolerance) {
+            return highMsg;
+        }
+        return null;
+    }
 }
