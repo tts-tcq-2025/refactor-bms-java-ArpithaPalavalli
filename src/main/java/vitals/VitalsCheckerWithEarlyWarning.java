@@ -14,6 +14,6 @@ public class VitalsCheckerWithEarlyWarning extends VitalsCheckerBase {
 
     public boolean vitalsOk(float temperature, float pulseRate, float spo2) {
         VitalReading reading = new VitalReading(temperature, pulseRate, spo2);
-        return vitals.stream().allMatch(v -> checkVital(v, reading));
+        return monitoredVitals.stream().allMatch(vital -> checkVital(vital, reading));
     }
 }
