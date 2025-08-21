@@ -23,7 +23,8 @@ Monitoring requires accurate reading and thresholding of the vitals.
 1. Reduce the cyclomatic complexity.
 1. Separate pure functions from I/O
 1. Avoid duplication - functions that do nearly the same thing
-1. Complete the tests - cover all conditions. 
+1. Complete the tests - cover all conditions.
+2. Introduce a 'warning' level for caregivers, where a tolerance of 1.5% of the upper limit triggers warnings: for body temperature, between 95 and 96.53 indicates "Approaching hypothermia," and between 100.47 and 102 indicates "Approaching hyperthermia," with similar thresholds applied for pulse rate and SPO2.
 
 ## Self-evaluation
 
