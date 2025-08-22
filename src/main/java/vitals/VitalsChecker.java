@@ -16,15 +16,23 @@ public class VitalsChecker {
 
     public boolean vitalsOk(float temperature, float pulseRate, float spo2) {
         VitalReading reading = new VitalReading(temperature, pulseRate, spo2);
-        boolean allOk = true;
-        for (WarnableVital vital : vitals) {
-            if (!vital.isNormal(reading)) {
-                messageHandler.handle(vital.getCriticalMessage());
-                allOk = false;
-            } else if (vital.isWarning(reading)) {
-                messageHandler.handle(vital.getWarningMessage(reading));
-            }
-        }
+
+        boolean allOk = vitals.stream()
+                .map(vital -> checkVital(vital, reading))
+                .reduce(true, (a, b) -> a && b);
+
         return allOk;
+    }
+
+    private boolean checkVital(WarnableVital vital, VitalReading reading) {
+        if (!vital.isNormal(reading)) {
+            messageHandler.handle(vital.getCriticalMessage());
+            return false;
+        }
+        String warning = vital.getWarningMessage(reading);
+        if (warning != null) {
+            messageHandler.handle(warning);
+        }
+        return true;
     }
 }
