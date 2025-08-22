@@ -2,14 +2,14 @@ package vitals;
 
 import org.junit.Test;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.junit.Assert.*;
+
 public class VitalsCheckerTest {
-    VitalsChecker checker = new VitalsChecker(message -> {});
+    private final List<String> messages = new ArrayList<>();
+    private final VitalsChecker checker = new VitalsChecker(messages::add);
 
     @Test
     public void temperatureWithinRangeIsNormal() {
@@ -58,6 +58,7 @@ public class VitalsCheckerTest {
         Vital spo2 = new SpO2Vital(90);
         assertFalse(spo2.isNormal(new VitalReading(98.6f, 80, 89.9f)));
     }
+
     // ---------- NEW TESTS FOR WARNING EXTENSION ----------
 
     @Test
@@ -95,5 +96,3 @@ public class VitalsCheckerTest {
         assertTrue(messages.contains("Warning: Approaching hypoxemia"));
     }
 }
-
-
