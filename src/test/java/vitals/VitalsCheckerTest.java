@@ -5,7 +5,8 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 public class VitalsCheckerTest {
     private final List<String> messages = new ArrayList<>();
@@ -96,3 +97,4 @@ public class VitalsCheckerTest {
         assertTrue(messages.contains("Warning: Approaching hypoxemia"));
     }
 }
+
