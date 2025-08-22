@@ -1,14 +1,16 @@
 package vitals;
 
-public class SpO2Vital implements Vital {
+public class SpO2Vital implements WarnableVital {
     private final float min;
     private final String message;
-    private final String warningMsg;
+    private final String warningMessage;
+    private final float tolerance;
 
     public SpO2Vital(float min) {
         this.min = min;
         this.message = "Oxygen Saturation out of range!";
-        this.warningMsg = "Warning: Approaching hypoxemia";
+        this.warningMessage = "Warning: Approaching hypoxemia";
+        this.tolerance = min * 0.015f; // 1.5% of threshold
     }
 
     @Override
@@ -23,13 +25,7 @@ public class SpO2Vital implements Vital {
 
     @Override
     public String getWarningMessage(VitalReading reading) {
-        float tol = tolerance(min);
-
-        if (reading.spo2 >= min) {
-            if (reading.spo2 <= min + tol) {
-                return warningMsg;
-            }
-        }
-        return null;
+        return (reading.spo2 < (min + tolerance) && reading.spo2 >= min)
+                ? warningMessage : null;
     }
 }
