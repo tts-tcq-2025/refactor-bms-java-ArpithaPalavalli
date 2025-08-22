@@ -23,9 +23,9 @@ public class SpO2Vital implements WarnableVital {
         return message;
     }
 
-    @Override
-    public String getWarningMessage(VitalReading reading) {
-        return (reading.spo2 < (min + tolerance) && reading.spo2 >= min)
-                ? warningMessage : null;
-    }
+   @Override
+public String getWarningMessage(VitalReading reading) {
+    return reading.spo2 < min + tolerance && reading.spo2 >= min
+            ? warningMessage : null;
+}
 }
