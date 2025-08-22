@@ -5,6 +5,9 @@ import org.junit.Test;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class VitalsCheckerTest {
     VitalsChecker checker = new VitalsChecker(message -> {});
 
@@ -92,4 +95,5 @@ public class VitalsCheckerTest {
         assertTrue(messages.contains("Warning: Approaching hypoxemia"));
     }
 }
+
 
