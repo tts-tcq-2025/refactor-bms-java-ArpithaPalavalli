@@ -55,4 +55,41 @@ public class VitalsCheckerTest {
         Vital spo2 = new SpO2Vital(90);
         assertFalse(spo2.isNormal(new VitalReading(98.6f, 80, 89.9f)));
     }
+    // ---------- NEW TESTS FOR WARNING EXTENSION ----------
+
+    @Test
+    public void temperatureLowWarningTriggered() {
+        messages.clear();
+        checker.vitalsOk(95.5f, 72f, 98f);
+        assertTrue(messages.contains("Warning: Approaching hypothermia"));
+    }
+
+    @Test
+    public void temperatureHighWarningTriggered() {
+        messages.clear();
+        checker.vitalsOk(101.5f, 72f, 98f);
+        assertTrue(messages.contains("Warning: Approaching hyperthermia"));
+    }
+
+    @Test
+    public void pulseRateLowWarningTriggered() {
+        messages.clear();
+        checker.vitalsOk(98.6f, 61f, 95f);
+        assertTrue(messages.contains("Warning: Approaching bradycardia"));
+    }
+
+    @Test
+    public void pulseRateHighWarningTriggered() {
+        messages.clear();
+        checker.vitalsOk(98.6f, 99f, 95f);
+        assertTrue(messages.contains("Warning: Approaching tachycardia"));
+    }
+
+    @Test
+    public void spo2WarningTriggered() {
+        messages.clear();
+        checker.vitalsOk(98.6f, 72f, 90.5f);
+        assertTrue(messages.contains("Warning: Approaching hypoxemia"));
+    }
 }
+
