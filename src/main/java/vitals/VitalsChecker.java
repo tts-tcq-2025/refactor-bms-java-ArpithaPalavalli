@@ -15,14 +15,11 @@ public class VitalsChecker {
     }
 
     public boolean vitalsOk(float temperature, float pulseRate, float spo2) {
-        VitalReading reading = new VitalReading(temperature, pulseRate, spo2);
-
-        boolean allOk = vitals.stream()
-                .map(vital -> checkVital(vital, reading))
-                .reduce(true, (a, b) -> a && b);
-
-        return allOk;
-    }
+    VitalReading reading = new VitalReading(temperature, pulseRate, spo2);
+    return vitals.stream()
+            .map(vital -> checkVital(vital, reading))
+            .reduce(true, (a, b) -> a && b);
+}
 
     private boolean checkVital(WarnableVital vital, VitalReading reading) {
         if (!vital.isNormal(reading)) {
