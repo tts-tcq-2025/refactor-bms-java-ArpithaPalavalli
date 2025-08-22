@@ -36,12 +36,16 @@ public abstract class RangeVital implements WarnableVital {
     }
 
     @Override
-    public String getWarningMessage(VitalReading reading) {
-        float value = getVitalValue(reading);
-        if (inLowWarning(value)) return lowWarningMsg;
-        if (inHighWarning(value)) return highWarningMsg;
-        return null;
+public String getWarningMessage(VitalReading reading) {
+    float value = getVitalValue(reading);
+    if (inLowWarning(value)) {
+        return lowWarningMsg;
     }
+    if (inHighWarning(value)) {
+        return highWarningMsg;
+    }
+    return null;
+}
 
     protected abstract float getVitalValue(VitalReading reading);
 }
